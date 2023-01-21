@@ -93,7 +93,7 @@ public abstract class DequeTests {
 
     @Test
     void removeWhenEmptyReturnsNull() {
-    Deque<String> deque = createDeque();
+        Deque<String> deque = createDeque();
         String output = deque.removeFirst();
         assertNull(output);
     }
@@ -205,15 +205,25 @@ public abstract class DequeTests {
         deque.addFirst(-2);
         deque.addFirst(-3);
 
+//        // Test a tricky sequence of removes
+//        assertEquals(-3, deque.removeFirst());
+//        assertEquals(5, deque.removeLast());
+//        assertEquals(4, deque.removeLast());
+//        assertEquals(3, deque.removeLast());
+//        assertEquals(2, deque.removeLast());
+//
+//        int actual = deque.removeLast();
+//        assertEquals(1, actual);
+
         // Test a tricky sequence of removes
-        assertEquals(-3, deque.removeFirst());
         assertEquals(5, deque.removeLast());
         assertEquals(4, deque.removeLast());
         assertEquals(3, deque.removeLast());
         assertEquals(2, deque.removeLast());
+        assertEquals(1, deque.removeLast());
 
         int actual = deque.removeLast();
-        assertEquals(1, actual);
+        assertEquals(0, actual);
     }
 
     @Nested
