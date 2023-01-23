@@ -9,11 +9,11 @@ public class LinkedDeque<E> implements Deque<E> {
     /**
      * The sentinel node representing the front of this deque.
      */
-    private final Node<E> front;
+    private Node<E> front;
     /**
      * The sentinel node representing the back of this deque.
      */
-    private final Node<E> back;
+    private Node<E> back;
     /**
      * The number of elements in this deque.
      */
@@ -33,15 +33,19 @@ public class LinkedDeque<E> implements Deque<E> {
     @Override
     public void addFirst(E element) {
         size += 1;
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
+        front.value = element;
+        Node<E> newFront = new Node<>(null,null,front);
+        front.prev = newFront;
+        front = newFront;
     }
 
     @Override
     public void addLast(E element) {
         size += 1;
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
+        back.value = element;
+        Node<E> newBack = new Node<>(null,back,null);
+        back.next = newBack;
+        back = newBack;
     }
 
     @Override
@@ -50,8 +54,11 @@ public class LinkedDeque<E> implements Deque<E> {
             return null;
         }
         size -= 1;
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
+        E firstValue= front.next.value;
+        front = front.next;
+        front.value = null;
+        front.prev = null;
+        return firstValue;
     }
 
     @Override
@@ -60,8 +67,11 @@ public class LinkedDeque<E> implements Deque<E> {
             return null;
         }
         size -= 1;
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
+        E lastValue = back.prev.value;
+        back = back.prev;
+        back.value = null;
+        back.next = null;
+        return lastValue;
     }
 
     @Override
@@ -140,7 +150,7 @@ public class LinkedDeque<E> implements Deque<E> {
         /**
          * The element data value.
          */
-        public final T value;
+        public T value;
         /**
          * The previous node in the deque.
          */
