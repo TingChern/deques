@@ -246,7 +246,7 @@ public abstract class DequeTests {
          * The output is comma-separated with columns for deque size and add time (nanoseconds).
          */
         @Test
-        void add() {
+        void addLast() {
             for (int size = STEP; size <= MAX_SIZE; size += STEP) {
                 System.out.print(size);
                 System.out.print(',');
@@ -276,5 +276,104 @@ public abstract class DequeTests {
                 System.out.println();
             }
         }
+
+        @Test
+        void addFirst() { // ArrayListDeque slower than ArrayDeque
+            for (int size = STEP; size <= MAX_SIZE; size += STEP) {
+                System.out.print(size);
+                System.out.print(',');
+
+                // Create a new deque and add size-number of integers
+                Deque<Integer> deque = createDeque();
+                for (int j = 0; j < size; j += 1) {
+                    deque.addLast(j);
+                }
+
+                // Record the total runtimes accumulated across all trials
+                long totalAddTime = 0;
+
+                for (int i = 0; i < NUM_TRIALS; i += 1) {
+                    // Measure the time to add one more integer
+                    long addStart = System.nanoTime();
+                    deque.addFirst(size);
+                    long addTime = System.nanoTime() - addStart;
+                    // Add to total time
+                    totalAddTime += addTime;
+                    // Remove the just-added integer
+                    deque.removeFirst();
+                }
+
+                // Output the averages to 10 decimal places.
+                System.out.print(totalAddTime / (double) NUM_TRIALS);
+                System.out.println();
+            }
+        }
+
+        @Test
+        void removeFirst() { // ArrayListDeque slower than ArrayDeque
+            for (int size = STEP; size <= MAX_SIZE; size += STEP) {
+                System.out.print(size);
+                System.out.print(',');
+
+                // Create a new deque and add size-number of integers
+                Deque<Integer> deque = createDeque();
+                for (int j = 0; j < size; j += 1) {
+                    deque.addLast(j);
+                }
+
+                // Record the total runtimes accumulated across all trials
+                long totalRemoveTime = 0;
+
+                for (int i = 0; i < NUM_TRIALS; i += 1) {
+
+                    deque.addFirst(size);
+
+                    // Measure the time to remove one more integer
+                    long removeStart = System.nanoTime();
+                    deque.removeFirst();
+                    long removeTime = System.nanoTime() - removeStart;
+                    // Add to total time
+                    totalRemoveTime += removeTime;
+                }
+
+                // Output the averages to 10 decimal places.
+                System.out.print(totalRemoveTime / (double) NUM_TRIALS);
+                System.out.println();
+            }
+        }
+
+        @Test
+        void removeLast() {
+            for (int size = STEP; size <= MAX_SIZE; size += STEP) {
+                System.out.print(size);
+                System.out.print(',');
+
+                // Create a new deque and add size-number of integers
+                Deque<Integer> deque = createDeque();
+                for (int j = 0; j < size; j += 1) {
+                    deque.addLast(j);
+                }
+
+                // Record the total runtimes accumulated across all trials
+                long totalRemoveTime = 0;
+
+                for (int i = 0; i < NUM_TRIALS; i += 1) {
+
+                    deque.addLast(size);
+
+                    // Measure the time to remove one more integer
+                    long removeStart = System.nanoTime();
+                    deque.removeLast();
+                    long removeTime = System.nanoTime() - removeStart;
+                    // Add to total time
+                    totalRemoveTime += removeTime;
+                }
+
+                // Output the averages to 10 decimal places.
+                System.out.print(totalRemoveTime / (double) NUM_TRIALS);
+                System.out.println();
+            }
+        }
+
     }
 }
