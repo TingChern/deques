@@ -33,15 +33,17 @@ public class LinkedDeque<E> implements Deque<E> {
     @Override
     public void addFirst(E element) {
         size += 1;
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
+        Node<E> newNode = new Node<>( element, front, front.next);
+        front.next = newNode;
+        newNode.next.prev = newNode;
     }
 
     @Override
     public void addLast(E element) {
         size += 1;
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
+        Node<E> newNode = new Node<>( element, back.prev, back);
+        newNode.prev.next = newNode;
+        back.prev = newNode;
     }
 
     @Override
@@ -50,8 +52,10 @@ public class LinkedDeque<E> implements Deque<E> {
             return null;
         }
         size -= 1;
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
+        Node<E> first = front.next;
+        front.next = front.next.next;
+        front.next.prev = front;
+        return first.value;
     }
 
     @Override
@@ -60,8 +64,10 @@ public class LinkedDeque<E> implements Deque<E> {
             return null;
         }
         size -= 1;
-        // TODO: Replace with your code
-        throw new UnsupportedOperationException("Not implemented yet");
+        Node<E> last = back.prev;
+        back.prev = back.prev.prev;
+        back.prev.next = back;
+        return last.value;
     }
 
     @Override
@@ -94,7 +100,7 @@ public class LinkedDeque<E> implements Deque<E> {
         } else if (back.next != null) {
             return "Unexpected reference: back.next should be <null> but was <" + back.next + ">";
         }
-        String message = checkNode(front, -1);
+        String message = checkNode(front, -1); //the index of front is -1
         if (message != null) {
             return message;
         }
